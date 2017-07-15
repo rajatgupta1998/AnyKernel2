@@ -7,6 +7,9 @@ on init
     write /proc/sys/vm/overcommit_ratio 0
     write /proc/sys/vm/vfs_cache_pressure 50
 
+## Import spectrum profiles
+import /init.spectrum.rc
+
 on property:sys.boot_completed=1
     # acc. to qcom this improves first launch latencies
     # stock value is 512k
@@ -14,6 +17,22 @@ on property:sys.boot_completed=1
     setprop dalvik.vm.heapminfree 2m
 
     setprop sys.io.scheduler "maple"
+
+    # Make sure governor sys paths have the correct permissions
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+
+    # Make sure all the cpufreq sys paths have the correct permissions
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
 
     # Disable sched-boost
     write /proc/sys/kernel/sched_boost 0
