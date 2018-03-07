@@ -1,0 +1,103 @@
+##LoonyKernel init
+
+on init
+    # memory
+    write /proc/sys/vm/overcommit_ratio 10
+    write /proc/sys/vm/vfs_cache_pressure 50
+
+on property:sys.boot_completed=1
+    # acc. to qcom this improves first launch latencies
+    # stock value is 512k
+    # from franciscofranco
+    setprop dalvik.vm.heapminfree 2m
+
+    # Prevent mmc from scaling its clk down when performing writes
+    write /sys/class/mmc_host/mmc0/clk_scaling/scale_down_in_low_wr_load 1
+
+    # Don't treat storage as rotational
+    write /sys/block/mmcblk0/queue/rotational 0
+
+    # swappiness
+    write /proc/sys/vm/swappiness 60
+
+    # disable bcl & core_control to update gov settings
+    write /sys/module/msm_thermal/core_control/enabled 0
+    write /sys/devices/soc.0/qcom,bcl.57/mode "disable"
+    write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 0
+    write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 0
+    write /sys/devices/soc.0/qcom,bcl.57/mode "enable"
+
+    # interactive gov settings
+    # big cluster
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "0 1440000:20000"
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 87
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 200000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 50000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1190400
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 78
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1651200
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 345600
+
+    # LITTLE cluster
+    write /sys/devices/system/cpu/cpu4/online 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 92
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 200000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 50000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 883200
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads 83
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 30000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 652800
+
+    # enable bcl & core_control now
+    write /sys/module/msm_thermal/core_control/enabled 1
+    write /sys/devices/soc.0/qcom,bcl.57/mode "disable"
+    write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 12
+    write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 15
+    write /sys/devices/soc.0/qcom,bcl.57/mode "enable"
+
+    # set big cluster properties
+    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
+    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 0
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 0
+    write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
+    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
+
+    # cpu-boost
+    write /sys/module/cpu_boost/parameters/input_boost_enabled 0
+    write /sys/module/cpu_boost/parameters/input_boost_frequency "4:1094400 5:1094400 6:1094400 7:1094400"
+
+    # ksm
+    write /sys/kernel/mm/ksm/run 0
+    write /sys/kernel/mm/ksm/pages_to_scan 256
+    write /sys/kernel/mm/ksm/sleep_millisecs 1000
+    write /sys/kernel/mm/ksm/deferred_timer 0
+
+    # enable/disable adaptive lmk
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 0
+
+    # enable fp to sleep
+    write /sys/homebutton/enable 1
+    write /sys/homebutton/key 116
+
+    # enable/disable sweep2sleep by flar2
+    write /sys/sweep2sleep/sweep2sleep 0
+    write /sys/sweep2sleep/vib_strength 42
+
+    # my personal pref for kcal
+    write /sys/devices/platform/kcal_ctrl.0/kcal "236 216 226"
+    write /sys/devices/platform/kcal_ctrl.0/kcal_cont 267
+    write /sys/devices/platform/kcal_ctrl.0/kcal_sat 273
+    write /sys/devices/platform/kcal_ctrl.0/kcal_val 245
+
+    # sound control by flar2 (max 20dB)
+    write /sys/kernel/sound_control/headphone_gain "10 10"
+    write /sys/kernel/sound_control/mic_gain 10
+    write /sys/kernel/sound_control/speaker_gain 10
