@@ -72,7 +72,7 @@ __"block|mount|fstype|options|flags"__ requires you specify which part (listed i
 
 _dump_boot_ and _write_boot_ are the default method of unpacking/repacking, but for more granular control, or omitting ramdisk changes entirely ("OG AK" mode), these can be separated into _split_boot; unpack_ramdisk_ and _repack_ramdisk; flash_boot_ respectively.
 
-You may also use _ui_print "\<text\>"_ to write messages back to the recovery during the modification process, and _contains "\<string\>" "\<substring\>"_ to simplify string testing logic you might want in your script.
+You may also use _ui_print "\<text\>"_ to write messages back to the recovery during the modification process, and _file_getprop "\<file\>" "\<property\>"_ and _contains "\<string\>" "\<substring\>"_ to simplify string testing logic you might want in your script.
 
 ## // Binary Inclusion ##
 
@@ -80,10 +80,6 @@ The AK2 repo includes my latest static ARM builds of `mkbootimg`, `unpackbootimg
 
 https://forum.xda-developers.com/showthread.php?t=2073775 (Android Image Kitchen thread)  
 https://forum.xda-developers.com/showthread.php?t=2239421 (Odds and Ends thread)
-
-Or as linked, here:
-
-https://forum.xda-developers.com/xperia-j-e/development/arm-elftool-pack-unpack-boot-image-sony-t2146022 (ElfTool)
 
 Optional supported binaries which may be placed in /tools to enable built-in expanded functionality are as follows:
 * `mkbootfs` - for broken recoveries, or, booted flash support for a script or app via bind mounting to a /tmp directory
@@ -120,5 +116,7 @@ Not required, but any tweaks you can't hardcode into the source (best practice) 
 It is also extremely important to note that for the broadest AK2 compatibility it is always better to modify a ramdisk file rather than replace it.
 
 If running into trouble when flashing an AK2 zip, the suffix -debugging may be added to the zip's filename to enable creation of a debug .tgz of /tmp for later examination while booted or on desktop.
+
+For further support please see the AnyKernel2 XDA thread: https://forum.xda-developers.com/showthread.php?t=2670512
 
 Have fun!
