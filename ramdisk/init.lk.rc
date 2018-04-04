@@ -2,7 +2,9 @@
 
 on init
     # memory
-    write /proc/sys/vm/overcommit_ratio 10
+    write /proc/sys/vm/dirty_background_ratio 10
+    write /proc/sys/vm/dirty_ratio 40
+    write /proc/sys/vm/overcommit_ratio 0
     write /proc/sys/vm/vfs_cache_pressure 50
 
 on property:sys.boot_completed=1
@@ -20,6 +22,9 @@ on property:sys.boot_completed=1
     # swappiness
     write /proc/sys/vm/swappiness 60
 
+    # Entropy
+    write /proc/sys/kernel/random/write_wakeup_threshold 896
+
     # disable bcl & core_control to update gov settings
     write /sys/module/msm_thermal/core_control/enabled 0
     write /sys/devices/soc.0/qcom,bcl.57/mode "disable"
@@ -31,12 +36,12 @@ on property:sys.boot_completed=1
     # big cluster
     write /sys/devices/system/cpu/cpu0/online 1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "0 1440000:20000"
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 87
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "0 1344000:20000"
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 99
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 200000
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 50000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 78
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1094400
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "90 345600:23 422400:28 499200:33 652800:43 729600:48 844800:55 960000:63 1094400:72 1190400:78 1344000:88 1440000:94 1516800:99"
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 0
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration 0
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1651200
@@ -45,15 +50,15 @@ on property:sys.boot_completed=1
     # LITTLE cluster
     write /sys/devices/system/cpu/cpu4/online 1
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 0
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 92
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 200000
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 50000
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 883200
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads 83
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 30000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 99
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 160000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 40000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 998400
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads "90 307200:25 403200:33 518400:43 806400:67 883200:73 998400:82 1094400:90 1209600:99"
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 20000
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration 0
-    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 652800
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 307200
 
     # enable bcl & core_control now
     write /sys/module/msm_thermal/core_control/enabled 1
@@ -65,14 +70,18 @@ on property:sys.boot_completed=1
     # set big cluster properties
     write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
     write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 0
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 0
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 27
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 18
     write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
     write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
 
     # cpu-boost
     write /sys/module/cpu_boost/parameters/input_boost_enabled 0
-    write /sys/module/cpu_boost/parameters/input_boost_frequency "4:1094400 5:1094400 6:1094400 7:1094400"
+    write /sys/module/cpu_boost/parameters/input_boost_frequency "0:844800 4:806400"
+    write /sys/module/cpu_boost/parameters/input_boost_ms 500
+
+    # swappiness
+    write /proc/sys/vm/swappiness 60
 
     # ksm
     write /sys/kernel/mm/ksm/run 0
