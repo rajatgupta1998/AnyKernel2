@@ -89,8 +89,10 @@ on property:sys.boot_completed=1
     write /sys/kernel/mm/ksm/sleep_millisecs 1000
     write /sys/kernel/mm/ksm/deferred_timer 0
 
-    # enable/disable adaptive lmk
-    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 0
+    # lowmemory killer settings
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+    write /sys/module/lowmemorykiller/parameters/minfree "19200,24064,28672,34560,59904,89600"
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 99584
 
     # enable fp to sleep
     write /sys/homebutton/enable 1

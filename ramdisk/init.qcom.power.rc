@@ -158,7 +158,7 @@ on enable-low-power
     write /sys/module/process_reclaim/parameters/swap_opt_eff 30
 
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
-    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 53059
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 99584
 
     # Set perfd properties
     rm /data/system/perfd/default_values
