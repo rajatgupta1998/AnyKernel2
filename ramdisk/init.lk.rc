@@ -40,6 +40,9 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 99
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 200000
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 50000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/align_windows 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 0
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1094400
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "90 345600:23 422400:28 499200:33 652800:43 729600:48 844800:55 960000:63 1094400:72 1190400:78 1344000:88 1440000:94 1516800:99"
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 0
@@ -54,6 +57,9 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 99
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 160000
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 40000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/align_windows 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 0
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 998400
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads "90 307200:25 403200:33 518400:43 806400:67 883200:73 998400:82 1094400:90 1209600:99"
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 20000
@@ -79,9 +85,6 @@ on property:sys.boot_completed=1
     write /sys/module/cpu_boost/parameters/input_boost_enabled 0
     write /sys/module/cpu_boost/parameters/input_boost_frequency "0:844800 4:806400"
     write /sys/module/cpu_boost/parameters/input_boost_ms 500
-
-    # swappiness
-    write /proc/sys/vm/swappiness 60
 
     # ksm
     write /sys/kernel/mm/ksm/run 0
