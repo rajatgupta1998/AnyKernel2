@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() {
-kernel.string=LoonyKernel-v4.1
+kernel.string=LoonyKernel-v5
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
@@ -34,7 +34,6 @@ chown -R root:root $ramdisk/*;
 dump_boot;
 
 # begin ramdisk changes
-patch_fstab fstab.qcom none swap flags "zramsize=1073741824,max_comp_streams=4" "zramsize=536870912,max_comp_streams=4";
 insert_line init.qcom.rc "init.qcom.power.rc" before "import init.mmi.usb.rc" "import init.qcom.power.rc";
 insert_line init.rc "init.lk.rc" after "import /init.usb.rc" "import /init.lk.rc";
 
