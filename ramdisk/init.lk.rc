@@ -85,5 +85,5 @@ on property:sys.boot_completed=1
     write /sys/homebutton/key 116
 
     # enable/disable sweep2sleep by flar2
-    write /sys/sweep2sleep/sweep2sleep 0
+    write /sys/sweep2sleep/sweep2sleep 1
     write /sys/sweep2sleep/vib_strength 42
