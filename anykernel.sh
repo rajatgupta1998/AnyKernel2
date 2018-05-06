@@ -34,7 +34,6 @@ chown -R root:root $ramdisk/*;
 dump_boot;
 
 # begin ramdisk changes
-insert_line init.qcom.rc "init.qcom.power.rc" before "import init.mmi.usb.rc" "import init.qcom.power.rc";
 insert_line init.rc "init.lk.rc" after "import /init.usb.rc" "import /init.lk.rc";
 
 # end ramdisk changes
