@@ -24,62 +24,13 @@ on property:sys.boot_completed=1
     # swappiness
     write /proc/sys/vm/swappiness 20
 
-    # disable bcl & core_control to update gov settings
-    write /sys/module/msm_thermal/core_control/enabled 0
-    write /sys/devices/soc.0/qcom,bcl.57/mode "disable"
-    write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 0
-    write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 0
-    write /sys/devices/soc.0/qcom,bcl.57/mode "enable"
-
-    # interactive gov settings
-    # big cluster
-    write /sys/devices/system/cpu/cpu0/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "0 1344000:20000"
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 99
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 200000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 50000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/align_windows 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 0
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1094400
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 90
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 0
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1516800
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 345600
-
-    # LITTLE cluster
-    write /sys/devices/system/cpu/cpu4/online 1
-    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay "0 1094400:20000"
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 99
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 160000
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 40000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/align_windows 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 0
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 998400
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads 90
-    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 20000
-    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 307200
-
-    # enable bcl & core_control now
-    write /sys/module/msm_thermal/core_control/enabled 1
-    write /sys/devices/soc.0/qcom,bcl.57/mode "disable"
-    write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 12
-    write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 15
-    write /sys/devices/soc.0/qcom,bcl.57/mode "enable"
-
     # set big cluster properties
     write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
     write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
     write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 29
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 16
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 15
     write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
     write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
-
-    # cpu-boost
-    write /sys/module/cpu_boost/parameters/input_boost_frequency "0:844800 4:806400"
 
     # lmk
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 0
