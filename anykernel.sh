@@ -3,7 +3,7 @@
 
 ## AnyKernel setup
 # begin properties
-properties() {
+properties() { '
 kernel.string=LoonyKernel-v5.1
 do.devicecheck=1
 do.modules=0
@@ -11,7 +11,7 @@ do.cleanup=1
 do.cleanuponabort=0
 device.name1=athene
 device.name2=athene_f
-} # end properties
+'; } # end properties
 
 # shell variables
 block=/dev/block/platform/soc.0/7824900.sdhci/by-name/boot;
