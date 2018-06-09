@@ -1,8 +1,22 @@
 ## LoonyKernel init
 
 on early-init
+    # Make sure sys paths have the correct permissions
+    ## big
+    chown system system /sys/devices/system/cpu/cpu0/online
+    chmod 0664 /sys/devices/system/cpu/cpu0/online
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    ## LITTLE
+    chown system system /sys/devices/system/cpu/cpu4/online
+    chmod 0664 /sys/devices/system/cpu/cpu4/online
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+
     # boot with higher frequency, will be reset after boot->spectrum
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 1516800
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 1344000
+    write /sys/devices/system/cpu/cpu4/online 1
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 1209600
 
 on init
@@ -19,23 +33,50 @@ on property:sys.boot_completed=1
     # from franciscofranco
     setprop dalvik.vm.heapminfree 2m
 
-    setprop sys.io.scheduler "maple"
-
-    # Make sure governor sys paths have the correct permissions
+    # Make sure all the sys paths have the correct permissions
+    ## big
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-
-    # Make sure all the cpufreq sys paths have the correct permissions
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+    ## LITTLE
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
     chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
     chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+    # thermal & BCL core_control
+    chown system system write /sys/module/msm_thermal/core_control/enabled
+    chmod 0664 write /sys/module/msm_thermal/core_control/enabled
+    chown system system /sys/devices/soc.0/qcom,bcl.57/hotplug_mask
+    chmod 0664 /sys/devices/soc.0/qcom,bcl.57/hotplug_mask
+    chown system system /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask
+    chmod 0664 /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask
+    # core_ctl params
+    chown system system /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
+    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
+    chown system system /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
+    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
+    chown system system /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
+    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
+    chown system system /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
+    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
+    chown system system /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster
+    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster
+    # GPU
+    chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/governor
+    chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/governor
+    chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq
+    chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq
+    chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq
+    chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq
+    # input boost
+    chown system system /sys/module/cpu_boost/parameters/input_boost_enabled
+    chmod 0664 /sys/module/cpu_boost/parameters/input_boost_enabled
+    chown system system /sys/module/cpu_boost/parameters/input_boost_frequency
+    chmod 0664 /sys/module/cpu_boost/parameters/input_boost_frequency
+    # touch boost
+    chown system system /sys/module/msm_performance/parameters/touchboost
+    chmod 0664 /sys/module/msm_performance/parameters/touchboost
 
     # Disable sched-boost
     write /proc/sys/kernel/sched_boost 0
@@ -45,14 +86,6 @@ on property:sys.boot_completed=1
 
     # swappiness
     write /proc/sys/vm/swappiness 20
-
-    # set big cluster properties
-    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
-    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 29
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 15
-    write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
-    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
 
     # lmk
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 0
