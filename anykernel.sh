@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=LoonyKernel-v6
+kernel.string=LoonyKernel-v6.1
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
