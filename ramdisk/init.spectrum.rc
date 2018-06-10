@@ -22,22 +22,22 @@ on property:persist.spectrum.profile=0
    write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 0
    # big cluster
    write /sys/devices/system/cpu/cpu0/online 1
-   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor loony
-   write /sys/devices/system/cpu/cpu0/cpufreq/loony/above_hispeed_delay "0 1344000:20000"
-   write /sys/devices/system/cpu/cpu0/cpufreq/loony/use_sched_load 0
-   write /sys/devices/system/cpu/cpu0/cpufreq/loony/align_windows 1
-   write /sys/devices/system/cpu/cpu0/cpufreq/loony/max_freq_hysteresis 0
-   write /sys/devices/system/cpu/cpu0/cpufreq/loony/hispeed_freq 960000
+   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor katnap
+   write /sys/devices/system/cpu/cpu0/cpufreq/katnap/above_hispeed_delay "0 1344000:20000"
+   write /sys/devices/system/cpu/cpu0/cpufreq/katnap/use_sched_load 0
+   write /sys/devices/system/cpu/cpu0/cpufreq/katnap/align_windows 1
+   write /sys/devices/system/cpu/cpu0/cpufreq/katnap/max_freq_hysteresis 0
+   write /sys/devices/system/cpu/cpu0/cpufreq/katnap/hispeed_freq 960000
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1516800
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 345600
    # LITTLE cluster
    write /sys/devices/system/cpu/cpu4/online 1
-   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor loony
-   write /sys/devices/system/cpu/cpu4/cpufreq/loony/above_hispeed_delay "0 1094400:20000"
-   write /sys/devices/system/cpu/cpu4/cpufreq/loony/use_sched_load 0
-   write /sys/devices/system/cpu/cpu4/cpufreq/loony/align_windows 1
-   write /sys/devices/system/cpu/cpu4/cpufreq/loony/max_freq_hysteresis 0
-   write /sys/devices/system/cpu/cpu4/cpufreq/loony/hispeed_freq 998400
+   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor katnap
+   write /sys/devices/system/cpu/cpu4/cpufreq/katnap/above_hispeed_delay "0 1094400:20000"
+   write /sys/devices/system/cpu/cpu4/cpufreq/katnap/use_sched_load 0
+   write /sys/devices/system/cpu/cpu4/cpufreq/katnap/align_windows 1
+   write /sys/devices/system/cpu/cpu4/cpufreq/katnap/max_freq_hysteresis 0
+   write /sys/devices/system/cpu/cpu4/cpufreq/katnap/hispeed_freq 998400
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1209600
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 307200
    # enable thermal & BCL core_control now
