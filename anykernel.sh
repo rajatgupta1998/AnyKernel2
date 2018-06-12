@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=LoonyKernel-v6.1
+kernel.string=LoonyKernel-v6.2
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
@@ -14,7 +14,7 @@ device.name2=athene_f
 '; } # end properties
 
 # shell variables
-block=/dev/block/platform/soc.0/7824900.sdhci/by-name/boot;
+block=/dev/block/bootdevice/by-name/boot;
 is_slot_device=0;
 ramdisk_compression=auto;
 
