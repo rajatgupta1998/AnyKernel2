@@ -48,9 +48,6 @@ on property:persist.spectrum.profile=0
    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
    # GPU
    write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/governor msm-adreno-tz
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq 500000000
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/target_freq 465000000
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq 200000000
    # input boost
    write /sys/module/cpu_boost/parameters/input_boost_enabled 1
    write /sys/module/cpu_boost/parameters/input_boost_frequency "0:960000 4:883200 5:883200 6:883200 7:883200"
@@ -81,9 +78,6 @@ on property:persist.spectrum.profile=1
    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
    # GPU
    write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/governor msm-adreno-tz
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq 550000000
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/target_freq 500000000
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq 240000000
    # input boost
    write /sys/module/cpu_boost/parameters/input_boost_enabled 0
    # touch boost
@@ -113,9 +107,6 @@ on property:persist.spectrum.profile=2
    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
    # GPU
    write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/governor powersave
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq 465000000
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/target_freq 400000000
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq 160000000
    # input boost
    write /sys/module/cpu_boost/parameters/input_boost_enabled 0
    # touch boost
@@ -145,9 +136,6 @@ on property:persist.spectrum.profile=3
    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
    # GPU
    write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/governor performance
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq 550000000
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/target_freq 550000000
-   write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq 500000000
    # input boost
    write /sys/module/cpu_boost/parameters/input_boost_enabled 0
    # touch boost
