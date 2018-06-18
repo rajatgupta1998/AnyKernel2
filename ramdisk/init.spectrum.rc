@@ -16,10 +16,8 @@ on property:sys.boot_completed=1
 
 # Balance (default profile)
 on property:persist.spectrum.profile=0
-   # disable thermal & BCL core_control to update governor settings
+   # disable core_control to update governor settings
    write /sys/module/msm_thermal/core_control/enabled 0
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 0
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 0
    # big cluster
    write /sys/devices/system/cpu/cpu0/online 1
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor katnap
@@ -40,10 +38,8 @@ on property:persist.spectrum.profile=0
    write /sys/devices/system/cpu/cpu4/cpufreq/katnap/hispeed_freq 998400
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1209600
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 307200
-   # enable thermal & BCL core_control now
+   # enable core_control now
    write /sys/module/msm_thermal/core_control/enabled 1
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 12
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 15
    # set core_ctl parameters
    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
@@ -63,10 +59,8 @@ on property:persist.spectrum.profile=0
 
 # Performance
 on property:persist.spectrum.profile=1
-   # disable thermal & BCL core_control to update governor settings
+   # disable core_control to update governor settings
    write /sys/module/msm_thermal/core_control/enabled 0
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 0
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 0
    # big cluster
    write /sys/devices/system/cpu/cpu0/online 1
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
@@ -77,10 +71,8 @@ on property:persist.spectrum.profile=1
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor ondemand
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1209600
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 403200
-   # enable thermal & BCL core_control now
+   # enable core_control now
    write /sys/module/msm_thermal/core_control/enabled 1
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 12
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 15
    # set core_ctl parameters
    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 2
    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
@@ -99,10 +91,8 @@ on property:persist.spectrum.profile=1
 
 # Battery
 on property:persist.spectrum.profile=2
-   # disable thermal & BCL core_control to update governor settings
+   # disable core_control to update governor settings
    write /sys/module/msm_thermal/core_control/enabled 0
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 0
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 0
    # big cluster
    write /sys/devices/system/cpu/cpu0/online 1
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
@@ -113,10 +103,8 @@ on property:persist.spectrum.profile=2
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor powersave
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1094400
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 307200
-   # enable thermal & BCL core_control now
+   # enable core_control now
    write /sys/module/msm_thermal/core_control/enabled 1
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 12
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 15
    # set core_ctl parameters
    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 0
    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 2
@@ -135,10 +123,8 @@ on property:persist.spectrum.profile=2
 
 # Gaming
 on property:persist.spectrum.profile=3
-   # disable thermal & BCL core_control to update governor settings
+   # disable core_control to update governor settings
    write /sys/module/msm_thermal/core_control/enabled 0
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 0
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 0
    # big cluster
    write /sys/devices/system/cpu/cpu0/online 1
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
@@ -149,10 +135,8 @@ on property:persist.spectrum.profile=3
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor performance
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1209600
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 1099400
-   # enable thermal & BCL core_control now
+   # enable core_control now
    write /sys/module/msm_thermal/core_control/enabled 1
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 12
-   write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 15
    # set core_ctl parameters
    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 4
    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
