@@ -1,24 +1,5 @@
 ## LoonyKernel init
 
-on early-init
-    # Make sure sys paths have the correct permissions
-    # big
-    chown system system /sys/devices/system/cpu/cpu0/online
-    chmod 0664 /sys/devices/system/cpu/cpu0/online
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    # LITTLE
-    chown system system /sys/devices/system/cpu/cpu4/online
-    chmod 0664 /sys/devices/system/cpu/cpu4/online
-    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-
-    # boot with higher frequency, will be reset after boot->spectrum
-    write /sys/devices/system/cpu/cpu0/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 1440000
-    write /sys/devices/system/cpu/cpu4/online 1
-    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 1209600
-
 on init
     # memory
     write /proc/sys/vm/overcommit_ratio 0
