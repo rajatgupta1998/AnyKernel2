@@ -20,42 +20,18 @@ on property:sys.boot_completed=1
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     # LITTLE
     chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
     chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
     chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
     chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-    # core_ctl switch
-    chown system system write /sys/module/msm_thermal/core_control/enabled
-    chmod 0664 write /sys/module/msm_thermal/core_control/enabled
-    # core_ctl cluster properties
-    chown system system /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
-    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
-    chown system system /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
-    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
-    chown system system /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
-    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
-    chown system system /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
-    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
-    chown system system /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster
-    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
     # GPU
     chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/governor
     chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/governor
-    chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq
-    chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq
-    chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/target_freq
-    chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/target_freq
-    chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq
-    chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq
-    # input boost
-    chown system system /sys/module/cpu_boost/parameters/input_boost_enabled
-    chmod 0664 /sys/module/cpu_boost/parameters/input_boost_enabled
-    chown system system /sys/module/cpu_boost/parameters/input_boost_frequency
-    chmod 0664 /sys/module/cpu_boost/parameters/input_boost_frequency
-    # touch boost
-    chown system system /sys/module/msm_performance/parameters/touchboost
-    chmod 0664 /sys/module/msm_performance/parameters/touchboost
 
     # Disable sched-boost
     write /proc/sys/kernel/sched_boost 0
