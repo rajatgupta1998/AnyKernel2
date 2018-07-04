@@ -1,0 +1,18 @@
+## LoonyKernel init
+
+on property:sys.boot_completed=1
+   # Make sure sys paths have correct permissions
+   chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+   chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+   # governor configs
+   write /sys/devices/system/cpu/cpu0/online 1
+   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor katnap
+   write /sys/devices/system/cpu/cpufreq/katnap/above_hispeed_delay "0 1958400:20000"
+   write /sys/devices/system/cpu/cpufreq/katnap/boost 0
+   write /sys/devices/system/cpu/cpufreq/katnap/boostpulse_duration 0
+   write /sys/devices/system/cpu/cpufreq/katnap/hispeed_freq 1804800
+   write /sys/devices/system/cpu/cpu0/cpufreq/katnap/max_freq_hysteresis 0
+
+   # cpu-boost
+   write /sys/module/cpu_boost/parameters/input_boost_frequency "0:1689600 1:1689600 2:1689600 3:1689600"
