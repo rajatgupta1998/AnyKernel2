@@ -1,0 +1,78 @@
+## LoonyKernel init
+
+on property:sys.boot_completed=1
+    # acc. to qcom this improves first launch latencies
+    # stock value is 512k
+    # from franciscofranco
+    setprop dalvik.vm.heapminfree 2m
+
+    # Disable sched-boost
+    write /proc/sys/kernel/sched_boost 0
+
+    # Process reclaim
+    write /sys/module/process_reclaim/parameters/pressure_max 70
+    write /sys/module/process_reclaim/parameters/pressure_min 10
+    write /sys/module/process_reclaim/parameters/per_swap_size 1024
+    write /sys/module/process_reclaim/parameters/swap_opt_eff 30
+
+    # memory parameters
+    write /proc/sys/vm/dirty_background_ratio 10
+    write /proc/sys/vm/dirty_ratio 40
+    write /proc/sys/vm/overcommit_ratio 0
+    write /proc/sys/vm/swappiness 60
+    write /proc/sys/vm/vfs_cache_pressure 50
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+    write /sys/module/lowmemorykiller/parameters/minfree "18432,23040,27648,32256,55296,80640"
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
+
+    # disable thermal & BCL core_control to update gov settings
+    write /sys/module/msm_thermal/core_control/enabled 0
+    write /sys/devices/soc.0/qcom,bcl.57/mode "disable"
+    write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 0
+    write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 0
+    write /sys/devices/soc.0/qcom,bcl.57/mode "enable"
+
+    # Make sure all the sys paths have the correct permissions
+    ## big cluster
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    ## LITTLE cluster
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+    ## GPU
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/governor
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/devfreq/governor
+    write /sys/class/kgsl/kgsl-3d0/max_gpuclk 550000000
+
+    # set cpu frequencies
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1651200
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 499200
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1209600
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 403200
+
+    # core control settings
+    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 2
+    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
+    write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
+    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
+
+# Import spectrum profiles
+import /init.spectrum.rc
+
+    # re-enable thermal & BCL core_control now
+    write /sys/module/msm_thermal/core_control/enabled 1
+    write /sys/devices/soc.0/qcom,bcl.57/mode "disable"
+    write /sys/devices/soc.0/qcom,bcl.57/hotplug_mask 12
+    write /sys/devices/soc.0/qcom,bcl.57/hotplug_soc_mask 15
+    write /sys/devices/soc.0/qcom,bcl.57/mode "enable"
+
+    # sweep2sleep by flar2
+    write /sys/sweep2sleep/sweep2sleep 1

@@ -37,6 +37,15 @@ dump_boot;
 # begin ramdisk changes
 insert_line init.rc "init.lk.rc" after "import /init.usb.rc" "import /init.lk.rc";
 
+# rip qcom's post-boot script
+mount -o rw,remount -t auto /system;
+chmod 777 /system/etc/init.qcom.post_boot.sh;
+rm -rf /system/etc/init.qcom.post_boot.sh;
+mount -o ro,remount -t auto /system;
+
+# lk post_boot script
+replace_line init.qcom.rc "service qcom-post-boot /system/bin/sh /system/etc/init.qcom.post_boot.sh" "service qcom-post-boot /system/bin/sh /init.lk.post_boot.sh"
+
 # end ramdisk changes
 
 write_boot;
