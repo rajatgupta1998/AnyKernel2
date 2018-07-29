@@ -1,0 +1,137 @@
+# SPECTRUM KERNEL MANAGER
+# Ramdisk file for profile based kernel management
+# Implimentation inspired by Franco's fku profiles
+
+# Initialization
+on property:sys.boot_completed=1
+    # Set default profile on first boot
+    # Executed under three different contexts to make sure it fires properly
+    exec u:r:init:s0 root root -- /init.spectrum.sh
+    exec u:r:su:s0 root root -- /init.spectrum.sh
+    exec u:r:supersu:s0 root root -- /init.spectrum.sh
+    # Enable Spectrum support
+    setprop spectrum.support 1
+    # Add kernel name
+    setprop persist.spectrum.kernel Loony
+
+# Balance (default profile)
+on property:persist.spectrum.profile=0
+    # big cluster
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "0 1440000:20000"
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boost 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 99
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1094400
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/taget_loads 90
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 50000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 200000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 0
+    # LITTLE cluster
+    write /sys/devices/system/cpu/cpu4/online 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boost 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 99
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 998400
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/max_freq_hysteresis 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/taget_loads 90
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 50000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 200000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 0
+    # set core_ctl parameters
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 70
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 45
+    # GPU
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
+    # input boost
+    write /sys/module/cpu_boost/parameters/input_boost_enabled 0
+    write /sys/module/cpu_boost/parameters/input_boost_frequency "0:806400 4:652800 5:652800 6:652800 7:652800"
+    write /sys/module/cpu_boost/parameters/input_boost_ms 500
+    # touch boost
+    write /sys/module/msm_performance/parameters/touchboost 0
+
+# Performance
+on property:persist.spectrum.profile=1
+    # big cluster
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay 30000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boost 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 92
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1094400
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/taget_loads 85
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 30000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 120000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 0
+    # LITTLE cluster
+    write /sys/devices/system/cpu/cpu4/online 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 30000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boost 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 92
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 998400
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/max_freq_hysteresis 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/taget_loads 80
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 30000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 120000
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 0
+    # set core_ctl parameters
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 52
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 34
+    # GPU
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
+    # input boost
+    write /sys/module/cpu_boost/parameters/input_boost_enabled 0
+    # touch boost
+    write /sys/module/msm_performance/parameters/touchboost 1
+
+# Battery
+on property:persist.spectrum.profile=2
+    # big cluster
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
+    # LITTLE cluster
+    write /sys/devices/system/cpu/cpu4/online 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor powersave
+    # set core_ctl parameters
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 85
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 60
+    # GPU
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor powersave
+    # input boost
+    write /sys/module/cpu_boost/parameters/input_boost_enabled 0
+    # touch boost
+    write /sys/module/msm_performance/parameters/touchboost 0
+
+# Gaming
+on property:persist.spectrum.profile=3
+    # big cluster
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
+    # LITTLE cluster
+    write /sys/devices/system/cpu/cpu4/online 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor performance
+    # set core_ctl parameters
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 0
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 0
+    # GPU
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor performance
+    # input boost
+    write /sys/module/cpu_boost/parameters/input_boost_enabled 0
+    # touch boost
+    write /sys/module/msm_performance/parameters/touchboost 1
