@@ -47,8 +47,8 @@ on property:persist.spectrum.profile=0
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 0
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 0
     # set core_ctl parameters
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 70
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 45
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 45
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 32
     # GPU
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
     # input boost
@@ -91,8 +91,8 @@ on property:persist.spectrum.profile=1
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 0
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 0
     # set core_ctl parameters
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 52
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 34
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 36
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 27
     # GPU
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
     # input boost
@@ -109,8 +109,8 @@ on property:persist.spectrum.profile=2
     write /sys/devices/system/cpu/cpu4/online 1
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor powersave
     # set core_ctl parameters
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 85
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 60
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 52
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 40
     # GPU
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor powersave
     # input boost
