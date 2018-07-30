@@ -16,6 +16,8 @@ on property:sys.boot_completed=1
 
 # Balance (default profile)
 on property:persist.spectrum.profile=0
+    # disable core_control to update gov settings
+    write /sys/module/msm_thermal/core_control/enabled 0
     # big cluster
     write /sys/devices/system/cpu/cpu0/online 1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
@@ -46,9 +48,15 @@ on property:persist.spectrum.profile=0
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 200000
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 0
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 0
+    # re-enable core_control now
+    write /sys/module/msm_thermal/core_control/enabled 1
     # set core_ctl parameters
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 70
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 45
+    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
+    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 45
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 32
+    write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
+    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
     # GPU
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
     # input boost
@@ -60,6 +68,8 @@ on property:persist.spectrum.profile=0
 
 # Performance
 on property:persist.spectrum.profile=1
+    # disable core_control to update gov settings
+    write /sys/module/msm_thermal/core_control/enabled 0
     # big cluster
     write /sys/devices/system/cpu/cpu0/online 1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
@@ -90,9 +100,15 @@ on property:persist.spectrum.profile=1
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack 120000
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 0
     write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 0
+    # re-enable core_control now
+    write /sys/module/msm_thermal/core_control/enabled 1
     # set core_ctl parameters
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 52
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 34
+    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
+    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 36
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 27
+    write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
+    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
     # GPU
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
     # input boost
@@ -102,15 +118,23 @@ on property:persist.spectrum.profile=1
 
 # Battery
 on property:persist.spectrum.profile=2
+    # disable core_control to update gov settings
+    write /sys/module/msm_thermal/core_control/enabled 0
     # big cluster
     write /sys/devices/system/cpu/cpu0/online 1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
     # LITTLE cluster
     write /sys/devices/system/cpu/cpu4/online 1
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor powersave
+    # re-enable core_control now
+    write /sys/module/msm_thermal/core_control/enabled 1
     # set core_ctl parameters
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 85
-    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 60
+    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
+    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 52
+    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 40
+    write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
+    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
     # GPU
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor powersave
     # input boost
@@ -120,15 +144,23 @@ on property:persist.spectrum.profile=2
 
 # Gaming
 on property:persist.spectrum.profile=3
+    # disable core_control to update gov settings
+    write /sys/module/msm_thermal/core_control/enabled 0
     # big cluster
     write /sys/devices/system/cpu/cpu0/online 1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
     # LITTLE cluster
     write /sys/devices/system/cpu/cpu4/online 1
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor performance
+    # re-enable thermal & BCL core_control now
+    write /sys/module/msm_thermal/core_control/enabled 1
     # set core_ctl parameters
+    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 1
+    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4
     write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 0
     write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 0
+    write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100
+    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1
     # GPU
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor performance
     # input boost
