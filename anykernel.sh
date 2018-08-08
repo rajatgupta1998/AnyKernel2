@@ -27,11 +27,15 @@ ramdisk_compression=auto;
 ## AnyKernel file attributes
 # set permissions/ownership for included ramdisk files
 chmod -R 750 $ramdisk/*;
+chmod -R 755 $ramdisk/sbin;
 chown -R root:root $ramdisk/*;
 
 
 ## AnyKernel install
 dump_boot;
+
+# begin ramdisk changes
+insert_line init.rc "init.reviver.rc" after "import /init.usb.rc" "import /init.reviver.rc";
 
 # end ramdisk changes
 
