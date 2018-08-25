@@ -40,3 +40,6 @@ on property:sys.boot_completed=1
 	# Input boost config
 	write /sys/module/cpu_boost/parameters/input_boost_freq "0:1094400 4:998400"
 	write /sys/module/cpu_boost/parameters/input_boost_ms 500
+    
+	# sched boost config
+	write /proc/sys/kernel/sched_boost 0
