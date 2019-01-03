@@ -11,6 +11,7 @@ do.cleanup=1
 do.cleanuponabort=0
 device.name1=montana
 device.name2=montana_retail
+supported.versions=
 '; } # end properties
 
 # shell variables
