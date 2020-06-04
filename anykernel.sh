@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=ReviverKernel v1.2 by rajatgupta1998
+kernel.string=ReviverKernel v1.3 by rajatgupta1998
 do.devicecheck=1
 do.modules=0
 do.systemless=1
